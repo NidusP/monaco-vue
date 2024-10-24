@@ -15,11 +15,22 @@
     "vue": "^3.4.37"
   },
   "devDependencies": {
-    "vitepress": "^1.4.1",
     "@types/node": "^22.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.11.0",
+    "@typescript-eslint/parser": "^8.11.0",
     "@vitejs/plugin-vue": "^5.1.2",
-    "typescript": "^5.5.3",
+    "eslint": "^9.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.8.3",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-unused-imports": "3.2.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
     "vite": "^5.4.1",
+    "vitepress": "^1.4.1",
     "vue-tsc": "^2.0.29"
   }
 }
