@@ -1,3 +1,3 @@
 export const monacoVue = 'monacoVue--hello';
 
-console.log('hello ' + monacoVue);
+console.log('hello ' + monacoVue + ' !');
