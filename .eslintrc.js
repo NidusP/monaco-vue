@@ -26,6 +26,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
 
+    'plugin:vue/vue3-essential',
+    '@vue/prettier',
+
     // 支持jest
     'plugin:jest/recommended',
     // 使用prettier格式化代码
