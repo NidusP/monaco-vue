@@ -2,7 +2,7 @@
   "name": "monaco-vue",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:monaco": "pnpm -C ./packages/monaco-vue dev",
@@ -11,13 +11,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "lint-staged": "^15.2.10",
-    "simple-git-hooks": "^2.11.1",
-    "vue": "^3.4.37"
-  },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged && pnpm check",
+    "pre-commit": "pnpm lint-staged",
     "commit-msg": "node scripts/verify-commit.js"
   },
   "lint-staged": {
@@ -30,6 +25,7 @@
     ]
   },
   "devDependencies": {
+    "picocolors": "^1.1.1",
     "@types/node": "^22.7.4",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
@@ -47,5 +43,10 @@
     "vite": "^5.4.1",
     "vitepress": "^1.4.1",
     "vue-tsc": "^2.0.29"
+  },
+  "dependencies": {
+    "lint-staged": "^15.2.10",
+    "simple-git-hooks": "^2.11.1",
+    "vue": "^3.4.37"
   }
 }
