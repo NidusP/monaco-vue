@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start:monaco": "pnpm -C ./packages/monaco-vue dev",
-    "start:monaco-sql": "pnpm -C ./packages/monaco-vue dev",
+    "start:monaco-sql": "pnpm -C ./packages/monaco-sql-vue dev",
     "start:site": "pnpm -C ./packages/site docs:dev"
   },
   "keywords": [],
@@ -47,7 +47,9 @@
   },
   "dependencies": {
     "lint-staged": "^15.2.10",
+    "monaco-editor": "^0.52.0",
     "simple-git-hooks": "^2.11.1",
+    "sql-formatter": "^15.4.5",
     "vue": "^3.4.37"
   }
 }
