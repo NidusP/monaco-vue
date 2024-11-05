@@ -2,8 +2,9 @@
 import { onMounted, ref } from 'vue';
 import { getMonaco } from '../utils/monaco';
 import type { editor } from 'monaco-editor';
+import { ContainerProps } from './types';
 
-
+const props = defineProps<ContainerProps>()
 const emit = defineEmits<{
   (event: 'mount', val: editor.IStandaloneCodeEditor): void;
 }>();
@@ -49,7 +50,8 @@ const handleC = () => {
 
 <template>
   <section style="width: 100vw; height: 300px;">
-    <div ref="aRef" style="height: 100%;"></div>
+    <div v-if="!props.isEditorReady"></div>
+    <div v-show="props.isEditorReady" ref="aRef" style="height: 100%;"></div>
   </section>
   <button @click="handleC">aaa</button>
 </template>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import MonacoContainer from '@monaco-editor/vue';
+import { editor } from 'monaco-editor';
 import { onMounted } from 'vue';
 
 onMounted(() => {
   console.log('aonBeforeMount,')
 })
-let aaa
-const mount = (a) => {
+let aaa: editor.IStandaloneCodeEditor
+const mount = (a: editor.IStandaloneCodeEditor) => {
   aaa = a
 }
 
