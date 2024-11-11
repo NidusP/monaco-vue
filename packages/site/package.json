@@ -10,7 +10,8 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@monaco-editor/vue": "workspace:^"
+    "@monaco-editor/vue": "workspace:^",
+    "@monaco-sql-editor/vue": "workspace:^"
   },
   "keywords": [],
   "author": "",

@@ -143,6 +143,9 @@ importers:
       '@monaco-editor/vue':
         specifier: workspace:^
         version: link:../monaco-vue
+      '@monaco-sql-editor/vue':
+        specifier: workspace:^
+        version: link:../monaco-sql-vue
 
 packages:
 
