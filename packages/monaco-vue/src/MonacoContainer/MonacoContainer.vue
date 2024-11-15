@@ -1,59 +1,39 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { getMonaco } from '../utils/monaco';
-import type { editor } from 'monaco-editor';
-import { ContainerProps } from './types';
+import type { ContainerEmits, ContainerProps } from './types';
 
 const props = defineProps<ContainerProps>()
-const emit = defineEmits<{
-  (event: 'mount', val: editor.IStandaloneCodeEditor): void;
-}>();
+const emit = defineEmits<ContainerEmits>();
 
-const aRef = ref();
-let a: editor.IStandaloneCodeEditor
+const divRef = ref();
+const isEditorReady = ref(false)
 
-onMounted(async () => {
-  console.log(aRef.value, 'aRef')
-
-  const monaco = await getMonaco()
-
-  a = monaco.editor.create(aRef.value, {
-    value: `SELECT d.name AS department_name, AVG(e.salary) AS average_salary,
-    COUNT(DISTINCT ep.project_id) AS total_projects,
-    SUM(p.budget) AS total_budget
-FROM 
-    departments d
-JOIN 
-    employees e ON d.id = e.department_id
-LEFT JOIN 
-    employee_projects ep ON e.id = ep.employee_id
-LEFT JOIN 
-    projects p ON ep.project_id = p.id
-GROUP BY 
-    d.id, d.name
-HAVING 
-    AVG(e.salary) > 50000
-ORDER BY 
-    average_salary DESC;
-`,
-    language: 'sql'
+const m = getMonaco()
+onMounted(() => {
+  m.then(monaco => {
+    isEditorReady.value = true
+    nextTick(() => {
+      emit('mount', (otps) => monaco.editor.create(divRef.value, otps))
+    })
   })
-
-  emit('mount', a)
 })
 
-
-const handleC = () => {
-  console.log('handleC')
-}
+onUnmounted(() => {
+  m.cancel()
+})
 </script>
 
 <template>
-  <section style="width: 100vw; height: 300px;">
-    <div v-if="!props.isEditorReady"></div>
-    <div v-show="props.isEditorReady" ref="aRef" style="height: 100%;"></div>
+  <section :style="{
+    width: props.width,
+    height: '300px'
+  }">
+    <div v-if="!isEditorReady">
+      loading{{ isEditorReady }}
+    </div>
+    <div v-show="isEditorReady" ref="divRef" style="height: 100%;"></div>
   </section>
-  <button @click="handleC">aaa</button>
 </template>
 
 <style scoped></style>

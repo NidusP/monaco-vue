@@ -5,6 +5,5 @@ loader.config({
   monaco,
 });
 
-export const getMonaco = async () => {
-  return await loader.init();
-};
+const cancelable = loader.init();
+export const getMonaco = () => cancelable;
