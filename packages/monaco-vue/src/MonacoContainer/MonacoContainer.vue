@@ -2,6 +2,7 @@
 import { nextTick, onMounted, onUnmounted, ref } from 'vue';
 import { getMonaco } from '../utils/monaco';
 import type { ContainerEmits, ContainerProps } from './types';
+import { cssProperty } from '../utils';
 
 const props = defineProps<ContainerProps>()
 const emit = defineEmits<ContainerEmits>();
@@ -14,7 +15,7 @@ onMounted(() => {
   m.then(monaco => {
     isEditorReady.value = true
     nextTick(() => {
-      emit('mount', (otps) => monaco.editor.create(divRef.value, otps))
+      emit('mount', monaco.editor.create(divRef.value))
     })
   })
 })
@@ -26,8 +27,8 @@ onUnmounted(() => {
 
 <template>
   <section :style="{
-    width: props.width,
-    height: '300px'
+    width: cssProperty(props.width),
+    height: cssProperty(props.height),
   }">
     <div v-if="!isEditorReady">
       loading{{ isEditorReady }}

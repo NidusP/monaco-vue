@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Editor from './Editor';
 
 const val = `WITH RankedEmployees AS (
@@ -27,26 +28,38 @@ WHERE
 ORDER BY 
     department_name ASC, 
     salary DESC;`
+
+const languages = ref('')
+const value = ref(val)
+const theme = ref('light')
+/**
+ * Toggles the value of the `languages` ref between 'sql' and 'java'.
+ * If the current value is neither 'sql' nor 'java', it defaults to 'sql'.
+ */
+const handleClick = () => {
+  if (theme.value === 'light') {
+    theme.value = 'vs-dark'
+  } else {
+    theme.value = 'light'
+  }
+
+  if (languages.value === 'sql') {
+    languages.value = 'java'
+  } else if (languages.value === 'java') {
+    languages.value = 'sql'
+  } else {
+    languages.value = 'sql'
+  }
+}
+
 </script>
 
 <template>
   Editor
-  <Editor languages="sql" :options="{}" :default-value="val" />
+  <Editor width="100vw" height="300px" :languages="languages" :options="{}" :default-value="val"
+    v-model:value="value" />
+  <button @click="handleClick">click</button>
+  <textarea v-model="value" :style="{ width: '100vw', height: '300px' }"></textarea>
+  <Editor width="100vw" :height="300" languages="sql" :options="{}" :default-value="val" v-model:value="value"
+    theme="vs-dark" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

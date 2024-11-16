@@ -3,31 +3,45 @@ import { watch } from 'vue';
 import { editor } from 'monaco-editor';
 import { EditorEmits, EditorProps } from './types';
 import MonacoContainer from '../MonacoContainer';
-import { getMonaco } from '../utils/monaco';
-import { getOrCreateModel } from '../utils';
+import { getMonaco, getOrCreateModel } from '../utils/monaco';
 
 const props = defineProps<EditorProps>()
 const emit = defineEmits<EditorEmits>()
 
-const handleMount = async (creator: (a: any) => editor.IStandaloneCodeEditor) => {
+const handleMount = async (codeEditor: editor.IStandaloneCodeEditor) => {
   const monaco = await getMonaco();
-  const codeEditor = creator({
-    model: getOrCreateModel(monaco, props.defaultValue || '', props.languages, '')
+  codeEditor.setModel(getOrCreateModel(monaco, props.defaultValue || '', props.languages, ''))
+
+  codeEditor.onDidChangeModelContent((event) => {
+    const val = codeEditor.getValue()
+    if (val !== props.value) {
+      emit('update:value', val)
+    }
   })
-
   // updateOptions
-  watch([props], async ([{ options, languages, }]) => {
-    if (options) codeEditor.updateOptions(options)
-
+  watch([props], async ([{ options, languages, value, theme }]) => {
     const model = codeEditor.getModel();
+
     if (model && languages) monaco.editor.setModelLanguage(model, languages);
+    if (theme) monaco.editor.setTheme(theme);
+    if (value != null && value !== codeEditor.getValue()) {
+      console.log('value changed', codeEditor.getValue())
+      console.log('value changed', value)
+      codeEditor.setValue(value)
+    }
+
+    // onMount
+    emit('mount', codeEditor, monaco)
+
+    if (options) codeEditor.updateOptions(options)
   }, {
     deep: true,
-    // immediate: true
+    immediate: true
   })
+
 }
 </script>
 
 <template>
-  <MonacoContainer width="100vw" :height="300" @mount="handleMount" />
+  <MonacoContainer :width="(props.width)" :height="(props.height)" @mount="handleMount" />
 </template>

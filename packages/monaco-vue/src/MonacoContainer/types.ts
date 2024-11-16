@@ -9,8 +9,5 @@ export type ContainerProps = {
 };
 
 export type ContainerEmits = {
-  (
-    event: 'mount',
-    val: (otps: editor.IStandaloneEditorConstructionOptions) => editor.IStandaloneCodeEditor,
-  ): editor.IStandaloneCodeEditor;
+  (event: 'mount', val: editor.IStandaloneCodeEditor): editor.IStandaloneCodeEditor;
 };
