@@ -29,7 +29,7 @@ ORDER BY
     department_name ASC, 
     salary DESC;`
 
-const languages = ref('')
+const languages = ref('sql')
 const value = ref(val)
 const theme = ref('light')
 /**
@@ -60,6 +60,6 @@ const handleClick = () => {
     v-model:value="value" />
   <button @click="handleClick">click</button>
   <textarea v-model="value" :style="{ width: '100vw', height: '300px' }"></textarea>
-  <Editor width="100vw" :height="300" languages="sql" :options="{}" :default-value="val" v-model:value="value"
-    theme="vs-dark" />
+  <Editor width="100vw" :height="300" :languages="languages === 'sql' ? 'java' : 'sql'" :options="{}"
+    :default-value="val" v-model:value="value" theme="lgight" />
 </template>

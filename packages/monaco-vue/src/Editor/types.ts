@@ -1,7 +1,6 @@
 import type { Monaco } from '@monaco-editor/loader';
 import type { editor } from 'monaco-editor';
-
-export type OnMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => void;
+import type { Theme } from '../../index';
 
 export type OnBeforeMount = (monaco: Monaco) => void;
 
@@ -10,9 +9,11 @@ export type EditorProps = {
   languages: string;
   defaultValue?: string;
   value?: string;
-  theme?: editor.defineTheme;
+  theme?: Theme | string;
   width: number | string;
   height: number | string;
+  line?: number;
+  path?: string;
 };
 
 export type EditorEmits = {

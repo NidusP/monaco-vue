@@ -1,7 +1,6 @@
-import MonacoContainer from './src/MonacoContainer/MonacoContainer.vue';
+import Editor from './src/Editor/Editor.vue';
 
-export const monacoVue = 'monacoVue--hello';
+export default Editor;
 
-export default MonacoContainer;
-
-console.log('hello ' + monacoVue + ' !');
+// Default themes
+export type Theme = 'vs-dark' | 'light';

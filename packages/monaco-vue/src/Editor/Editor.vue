@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { editor } from 'monaco-editor';
-import { EditorEmits, EditorProps } from './types';
+import type { EditorEmits, EditorProps, } from './types';
 import MonacoContainer from '../MonacoContainer';
-import { getMonaco, getOrCreateModel } from '../utils/monaco';
+import { getOrCreateModel } from '../utils/monaco';
+import type { OnMount } from '../MonacoContainer/types';
 
-const props = defineProps<EditorProps>()
+const props = withDefaults(defineProps<EditorProps>(), {
+  path: ''
+})
 const emit = defineEmits<EditorEmits>()
 
-const handleMount = async (codeEditor: editor.IStandaloneCodeEditor) => {
-  const monaco = await getMonaco();
-  codeEditor.setModel(getOrCreateModel(monaco, props.defaultValue || '', props.languages, ''))
+const handleMount: OnMount = async ({ editor: codeEditor, monaco }) => {
+  // console.log('onMount', codeEditor, monaco);
+  if (!codeEditor) return;
+
+  codeEditor.setModel(getOrCreateModel(monaco, props.defaultValue || '', props.languages, props.path))
 
   codeEditor.onDidChangeModelContent((event) => {
     const val = codeEditor.getValue()
@@ -18,30 +22,49 @@ const handleMount = async (codeEditor: editor.IStandaloneCodeEditor) => {
       emit('update:value', val)
     }
   })
-  // updateOptions
-  watch([props], async ([{ options, languages, value, theme }]) => {
-    const model = codeEditor.getModel();
 
-    if (model && languages) monaco.editor.setModelLanguage(model, languages);
-    if (theme) monaco.editor.setTheme(theme);
-    if (value != null && value !== codeEditor.getValue()) {
-      console.log('value changed', codeEditor.getValue())
-      console.log('value changed', value)
-      codeEditor.setValue(value)
-    }
-
-    // onMount
-    emit('mount', codeEditor, monaco)
-
-    if (options) codeEditor.updateOptions(options)
+  // update theme
+  watch(() => props.theme, (theme) => {
+    theme && monaco.editor.setTheme(theme);
   }, {
-    deep: true,
     immediate: true
   })
 
+  // update options
+  watch(() => props.options, (options) => {
+    options && codeEditor.updateOptions(options);
+  }, {
+    immediate: true,
+    deep: true
+  })
+
+  // update line
+  watch(() => props.line, (line) => {
+    line != null && codeEditor.revealLine(line)
+  })
+
+  // update languages  
+  watch(() => props.languages, (languages) => {
+    const model = codeEditor.getModel();
+    if (model && languages) monaco.editor.setModelLanguage(model, languages);
+  }, {
+    immediate: true
+  })
+
+  // update value
+  watch(() => props.value, (value) => {
+    if (value != null && value !== codeEditor.getValue()) {
+      codeEditor.setValue(value)
+    }
+  })
+
+  // onMount
+  emit('mount', codeEditor, monaco)
 }
 </script>
 
 <template>
-  <MonacoContainer :width="(props.width)" :height="(props.height)" @mount="handleMount" />
+  <MonacoContainer :width="(props.width)" :height="(props.height)" @mount="handleMount">
+    <template #loading>loading...hhh</template>
+  </MonacoContainer>
 </template>

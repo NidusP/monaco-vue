@@ -4,7 +4,6 @@ import * as monaco from 'monaco-editor';
 loader.config({
   monaco,
 });
-console.log('hhhhhhhhhhhhhhh h h h h h h h h');
 export const getMonaco = () => loader.init();
 
 /**
