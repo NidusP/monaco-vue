@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import Layout from './layout/index.vue'
+
+import { Header, Content } from './layout';
+
 </script>
 
 <template>
-  <Layout />
+  <section className="full-size">
+    <Header />
+    <Content />
+  </section>
 </template>
 
 <style scoped>
