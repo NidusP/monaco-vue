@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import Layout from './layout/index.vue'
+import { useEditorStore } from './store';
+const store = useEditorStore()
 </script>
 
 <template>
-  <Layout />
+  <VThemeProvider :theme="store.themeMode">
+    <Layout />
+  </VThemeProvider>
 </template>
 
 <style scoped>
