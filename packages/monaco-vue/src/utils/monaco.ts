@@ -2,7 +2,7 @@ import loader, { type Monaco } from '@monaco-editor/loader';
 import * as monaco from 'monaco-editor';
 
 loader.config({
-  monaco,
+  // monaco,
 });
 export const getMonaco = () => loader.init();
 
@@ -24,7 +24,7 @@ function noop() {
  * @param path The path of the model
  * @returns The model that was found or created
  */
-function getOrCreateModel(monaco: Monaco, value: string, language: string, path: string) {
+function getOrCreateModel(monaco: Monaco, value: string, language?: string, path?: string) {
   return getModel(monaco, path) || createModel(monaco, value, language, path);
 }
 

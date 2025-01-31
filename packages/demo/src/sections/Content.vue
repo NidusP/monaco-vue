@@ -1,17 +1,20 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from 'vue';
 import { useEditorStore } from '../store';
-import DiffEditor from './DiffEditor.vue';
-import Editor from './Editor.vue';
+import { EditorModeEnum } from '../utils';
+
+const editors = {
+  [EditorModeEnum.EDITOR]: defineAsyncComponent(() => import('./components/Editor.vue')),
+  [EditorModeEnum.DIFF_EDITOR]: defineAsyncComponent(() => import('./components/DiffEditor.vue')),
+  [EditorModeEnum.SQL_EDITOR]: defineAsyncComponent(() => import('./components/SqlEditor.vue'))
+}
 
 const store = useEditorStore()
 
 </script>
 
 <template>
-  <VContainer>
-    <Editor v-if="store.editorMode === 'editor'" />
-    <DiffEditor v-if="store.editorMode === 'diffEditor'" />
-  </VContainer>
+  <Component :is="editors[store.editorMode]"></Component>
 </template>
 
 <style scoped></style>

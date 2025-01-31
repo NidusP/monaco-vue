@@ -6,12 +6,28 @@ export type OnBeforeMount = (monaco: Monaco) => void;
 
 export type EditorProps = {
   options?: Parameters<editor.IStandaloneCodeEditor['updateOptions']>[0];
-  languages: string;
-  defaultValue?: string;
+  /**
+   * Value of the current model
+   */
   value?: string;
+
+  /**
+   * Language of the current model
+   */
+  language?: string;
+
   theme?: Theme | string;
-  width: number | string;
-  height: number | string;
+  /**
+   * Width of the editor wrapper
+   * Defaults to 100%
+   */
+  width?: number | string;
+
+  /**
+   * Height of the editor wrapper
+   * Defaults to 100%
+   */
+  height?: number | string;
   line?: number;
   path?: string;
 };

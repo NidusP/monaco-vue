@@ -1,4 +1,4 @@
-const config = {
+export const config = {
   links: {
     github: 'https://github.com/SurenAt93/monaco-react',
   },

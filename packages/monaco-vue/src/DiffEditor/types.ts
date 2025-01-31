@@ -1,6 +1,6 @@
 export type DiffEditorProps = {
   width: number | string;
   height: number | string;
-  languages: string;
+  language: string;
   defaultValue?: string;
 };

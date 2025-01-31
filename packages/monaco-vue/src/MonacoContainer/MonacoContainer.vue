@@ -19,9 +19,15 @@ onMounted(() => {
     isEditorReady.value = true
     nextTick(() => {
       emit('mount', {
-        editor: props.diffEditor ? undefined : monaco.editor.create(divRef.value),
+        editor: props.diffEditor 
+          ? undefined 
+          : monaco.editor.create(divRef.value, {
+            automaticLayout: true
+          }),
         monaco,
-        diffEditor: props.diffEditor ? monaco.editor.createDiffEditor(divRef.value) : undefined
+        diffEditor: props.diffEditor 
+          ? monaco.editor.createDiffEditor(divRef.value) 
+          : undefined
       })
     })
   })
@@ -30,6 +36,8 @@ onMounted(() => {
 onUnmounted(() => {
   m.cancel()
 })
+
+console.log(props.width, props.height, 'props props props');
 </script>
 
 <template>

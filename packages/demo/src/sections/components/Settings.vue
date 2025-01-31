@@ -1,19 +1,39 @@
 <script setup lang="tsx">
+/**
+ * A simple counter component
+ * 
+ * @component
+ * @example
+ * <Counter />
+ */
+
 import config from '@/config';
 import { useEditorStore } from '@/store';
 import monacoThemes from '@/config/monaco-themes';
-import { defineTheme } from '../../utils/defineTheme';
+import { defineTheme } from '@/utils/defineTheme';
+import { storeToRefs } from 'pinia';
+import Editor from '@monaco-editor/vue'
 
 const store = useEditorStore()
-console.log(config, 'config config config');
+const { themeMode, editor } = storeToRefs(store)
+
+console.log(editor.value.options, 'config config config',);
+const handleEditorDidMount = {
+  // setIsEditorReady(true);
+  //   editorRef.current = editor;
+}
 </script>
 
 <template>
-  <Typography variant="h5">Settings</Typography>
-  {{ store.selectedLanguageId }}store.selectedLanguageId
-  <Divider />
-  <VSelect v-model:model-value="store.selectedLanguageId" :items="config.supportedLanguages" item-title="name"
-    item-value="id" label="Language" />
-  <VSelect v-model:model-value="store.monacoTheme" :items="[...config.defaultThemes, ...Object.keys(monacoThemes)]"
-    label="Theme" @update:model-value="defineTheme" />
+  <VCard>
+    <VCardTitle>Settings</VCardTitle>
+    <VCardSubtitle>Languages</VCardSubtitle>
+    <VSelect v-model:model-value="editor.selectedLanguageId" :items="config.supportedLanguages" item-title="name"
+      item-value="id" label="Language" />
+    <VCardSubtitle>Themes</VCardSubtitle>
+    <VSelect v-model="themeMode" :items="[...config.defaultThemes, ...Object.keys(monacoThemes)]" label="Theme"
+      @update:model-value="defineTheme" />
+    <VCardSubtitle>Options</VCardSubtitle>
+    <Editor :theme="themeMode" language="json" :height="400" :value="JSON.stringify(editor.options, null, 2)" />
+  </VCard>
 </template>

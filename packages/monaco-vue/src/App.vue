@@ -29,11 +29,11 @@ ORDER BY
     department_name ASC, 
     salary DESC;`
 
-const languages = ref('sql')
+const language = ref('sql')
 const value = ref(val)
 const theme = ref('light')
 /**
- * Toggles the value of the `languages` ref between 'sql' and 'java'.
+ * Toggles the value of the `language` ref between 'sql' and 'java'.
  * If the current value is neither 'sql' nor 'java', it defaults to 'sql'.
  */
 const handleClick = () => {
@@ -43,12 +43,12 @@ const handleClick = () => {
     theme.value = 'light'
   }
 
-  if (languages.value === 'sql') {
-    languages.value = 'java'
-  } else if (languages.value === 'java') {
-    languages.value = 'sql'
+  if (language.value === 'sql') {
+    language.value = 'java'
+  } else if (language.value === 'java') {
+    language.value = 'sql'
   } else {
-    languages.value = 'sql'
+    language.value = 'sql'
   }
 }
 
@@ -56,10 +56,9 @@ const handleClick = () => {
 
 <template>
   Editor
-  <Editor width="100vw" height="300px" :languages="languages" :options="{}" :default-value="val"
-    v-model:value="value" />
+  <Editor width="100vw" height="300px" :language="language" :options="{}" :default-value="val" v-model:value="value" />
   <button @click="handleClick">click</button>
   <textarea v-model="value" :style="{ width: '100vw', height: '300px' }"></textarea>
-  <Editor width="100vw" :height="300" :languages="languages === 'sql' ? 'java' : 'sql'" :options="{}"
-    :default-value="val" v-model:value="value" theme="lgight" />
+  <Editor width="100vw" :height="300" :language="language === 'sql' ? 'java' : 'sql'" :options="{}" :default-value="val"
+    v-model:value="value" theme="lgight" />
 </template>

@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  DiffEditor
+  SqlEditor
 </template>

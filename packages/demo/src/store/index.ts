@@ -1,17 +1,14 @@
 import { defineStore, createPinia } from 'pinia';
+import { initialState } from './state';
+import type { EditorModeEnum } from '@/utils';
 
 export const useEditorStore = defineStore('editor', {
-  state: () => ({
-    editorMode: 'editor',
-    themeMode: 'light',
-    selectedLanguageId: 19,
-    monacoTheme: 'vs-dark',
-  }),
+  state: () => initialState,
   getters: {},
   actions: {
-    switchEditorMode() {
-      console.log('switchEditorMode', this.editorMode);
-      this.editorMode = this.editorMode === 'editor' ? 'diffEditor' : 'editor';
+    setEditorMode(mode: EditorModeEnum) {
+      console.log('switchEditorMode', mode);
+      this.editorMode = mode;
     },
     switchThemeMode() {
       this.themeMode = this.themeMode === 'light' ? 'dark' : 'light';

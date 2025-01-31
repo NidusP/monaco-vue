@@ -9,8 +9,8 @@ const props = defineProps<DiffEditorProps>()
 const handleMount: OnMount = ({ diffEditor, monaco }) => {
   if (!diffEditor) return;
 
-  const originalModel = getOrCreateModel(monaco, props.defaultValue || '', props.languages, '')
-  const modifiedModel = getOrCreateModel(monaco, props.defaultValue || '', props.languages, '')
+  const originalModel = getOrCreateModel(monaco, props.defaultValue || '', props.language, '')
+  const modifiedModel = getOrCreateModel(monaco, props.defaultValue || '', props.language, '')
 
   diffEditor.setModel({
     original: originalModel,
