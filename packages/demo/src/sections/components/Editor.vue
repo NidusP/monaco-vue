@@ -10,7 +10,7 @@ import { computed } from 'vue';
 const store = useEditorStore()
 const { editor } = storeToRefs(store)
 const language = computed(() => config.supportedLanguages
-  .find(({ id }) => id === editor.value.selectedLanguageId).name)
+  .find(({ id }) => id === editor.value.selectedLanguageId)?.name)
 
 </script>
 
@@ -18,7 +18,8 @@ const language = computed(() => config.supportedLanguages
   <VContainer fluid class="pa-0  pa-0">
     <VRow no-gutters>
       <VCol cols="8">
-        <MonacoEditor :value="examples[editor.selectedLanguageId]" :language="language" theme="vs-dark" />
+        <MonacoEditor :value="examples[editor.selectedLanguageId as 1]" :language="language" :options="editor.options"
+          theme="vs-dark" />
       </VCol>
       <VCol cols="4">
         <Settings />

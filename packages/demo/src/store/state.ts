@@ -1,4 +1,5 @@
 import config from '@/config';
+import type { editor } from 'monaco-editor';
 
 const initalTheme = localStorage.getItem('themeMode') || 'vs-dark';
 
@@ -44,7 +45,7 @@ export const initialState = {
       quickSuggestionsDelay: 100,
       readOnly: false,
       renderControlCharacters: false,
-      renderFinalNewline: true,
+      renderFinalNewline: 'on',
       renderIndentGuides: true,
       renderLineHighlight: 'all',
       renderWhitespace: 'none',
@@ -69,7 +70,7 @@ export const initialState = {
       wordWrapColumn: 80,
       wordWrapMinified: true,
       wrappingIndent: 'none',
-    },
+    } as editor.IEditorOptions & editor.IGlobalEditorOptions,
   },
 
   editorMode: 'editor',

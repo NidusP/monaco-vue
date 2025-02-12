@@ -17,11 +17,27 @@ import Editor from '@monaco-editor/vue'
 const store = useEditorStore()
 const { themeMode, editor } = storeToRefs(store)
 
-console.log(editor.value.options, 'config config config',);
-const handleEditorDidMount = {
+let editorRef = null;
+
+function handleEditorDidMount(editor, monaco) {
   // setIsEditorReady(true);
-  //   editorRef.current = editor;
+  editorRef = editor;
 }
+
+function handleApply() {
+  const currentValue = editorRef?.getValue();
+  let options;
+  try {
+    options = JSON.parse(currentValue);
+    store.setOptions(options);
+  } catch {
+    // showNotification({
+    //   message: config.messages.invalidOptions,
+    //   variant: "error",
+    // });
+  }
+}
+
 </script>
 
 <template>
@@ -34,6 +50,8 @@ const handleEditorDidMount = {
     <VSelect v-model="themeMode" :items="[...config.defaultThemes, ...Object.keys(monacoThemes)]" label="Theme"
       @update:model-value="defineTheme" />
     <VCardSubtitle>Options</VCardSubtitle>
-    <Editor :theme="themeMode" language="json" :height="400" :value="JSON.stringify(editor.options, null, 2)" />
+    <Editor :theme="themeMode" language="json" :height="400" :value="JSON.stringify(editor.options, null, 2)"
+      @mount="handleEditorDidMount" />
+    <VBtn color="info" @click="handleApply">APPLY</VBtn>
   </VCard>
 </template>

@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "lint-staged": "^15.2.10",
+    "monaco-editor": "^0.52.2",
     "simple-git-hooks": "^2.11.1",
     "vue": "^3.4.37"
   }

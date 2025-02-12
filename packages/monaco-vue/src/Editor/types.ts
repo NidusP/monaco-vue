@@ -5,7 +5,8 @@ import type { Theme } from '../../index';
 export type OnBeforeMount = (monaco: Monaco) => void;
 
 export type EditorProps = {
-  options?: Parameters<editor.IStandaloneCodeEditor['updateOptions']>[0];
+  // Parameters<editor.IStandaloneCodeEditor['updateOptions']>[0]
+  options?: (editor.IEditorOptions & editor.IGlobalEditorOptions) | undefined;
   /**
    * Value of the current model
    */

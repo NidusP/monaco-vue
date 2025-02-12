@@ -1,6 +1,7 @@
 import { defineStore, createPinia } from 'pinia';
 import { initialState } from './state';
 import type { EditorModeEnum } from '@/utils';
+import type { editor } from 'monaco-editor';
 
 export const useEditorStore = defineStore('editor', {
   state: () => initialState,
@@ -12,6 +13,9 @@ export const useEditorStore = defineStore('editor', {
     },
     switchThemeMode() {
       this.themeMode = this.themeMode === 'light' ? 'dark' : 'light';
+    },
+    setOptions(options: editor.IEditorOptions & editor.IGlobalEditorOptions) {
+      this.editor.options = options;
     },
   },
 });
